@@ -1,8 +1,6 @@
 package br.com.yangarrido.gestao_vagas.modules.candidate.controllers;
 
-import br.com.yangarrido.gestao_vagas.exceptions.UserFoundException;
 import br.com.yangarrido.gestao_vagas.modules.candidate.CandidateEntity;
-import br.com.yangarrido.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.yangarrido.gestao_vagas.modules.candidate.userCases.CreateCandidateUserCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
