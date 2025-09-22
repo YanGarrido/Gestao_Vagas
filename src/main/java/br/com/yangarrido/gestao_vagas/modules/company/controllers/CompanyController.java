@@ -2,6 +2,7 @@ package br.com.yangarrido.gestao_vagas.modules.company.controllers;
 
 import br.com.yangarrido.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.yangarrido.gestao_vagas.modules.company.userCases.CreateCompanyUserCase;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class CompanyController {
   private CreateCompanyUserCase createCompanyUserCase;
 
   @PostMapping("/")
-  public ResponseEntity<Object> create(@RequestBody CompanyEntity companyEntity){
+  public ResponseEntity<Object> create(@Valid @RequestBody CompanyEntity companyEntity){
     try{
       var result = this.createCompanyUserCase.execute(companyEntity);
       return ResponseEntity.ok().body(result);
