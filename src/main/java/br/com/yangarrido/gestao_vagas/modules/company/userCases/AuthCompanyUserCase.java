@@ -2,7 +2,10 @@ package br.com.yangarrido.gestao_vagas.modules.company.userCases;
 
 import br.com.yangarrido.gestao_vagas.dto.AuthCompanyDTO;
 import br.com.yangarrido.gestao_vagas.modules.company.repositories.CompanyRepository;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,16 +15,19 @@ import javax.naming.AuthenticationException;
 @Service
 public class AuthCompanyUserCase {
 
+  @Value("${security.token.secret}")
+  private String secretKey;
+
   @Autowired
   private CompanyRepository companyRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public void execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
+  public String execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
     var company = companyRepository.findByUsername(authCompanyDTO.getUsername()).orElseThrow(
         () ->{
-          throw new UsernameNotFoundException("Empresa não encontrada");
+          throw new UsernameNotFoundException("Nome de usuário/Senha incorretos");
         }
     );
 
@@ -31,5 +37,10 @@ public class AuthCompanyUserCase {
       throw new AuthenticationException();
     }
 
+  Algorithm algorithm = Algorithm.HMAC256(secretKey);
+    var token = JWT.create().withIssuer("javagas")
+        .withSubject(company.getId().toString())
+        .sign(algorithm);
+    return token;
   }
 }
