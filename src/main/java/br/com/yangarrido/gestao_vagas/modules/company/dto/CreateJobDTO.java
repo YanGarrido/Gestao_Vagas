@@ -1,4 +1,4 @@
-package br.com.yangarrido.gestao_vagas.dto;
+package br.com.yangarrido.gestao_vagas.modules.company.dto;
 
 import lombok.Data;
 

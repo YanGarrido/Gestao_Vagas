@@ -1,11 +1,12 @@
 package br.com.yangarrido.gestao_vagas.modules.company.controllers;
 
-import br.com.yangarrido.gestao_vagas.dto.CreateJobDTO;
+import br.com.yangarrido.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.yangarrido.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.yangarrido.gestao_vagas.modules.company.userCases.CreateJobUserCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/job")
+@RequestMapping("/company/job")
 public class JobController {
 
   @Autowired
   private CreateJobUserCase createJobUserCase;
 
   @PostMapping("/")
+  @PreAuthorize("hasRole('COMPANY')")
   public JobEntity create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
       var companyID = request.getAttribute("company_id");
 
