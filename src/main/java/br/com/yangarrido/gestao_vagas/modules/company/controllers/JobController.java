@@ -4,7 +4,6 @@ import br.com.yangarrido.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.yangarrido.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.yangarrido.gestao_vagas.modules.company.userCases.CreateJobUserCase;
 import io.swagger.v3.oas.annotations.Operation;
-
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
