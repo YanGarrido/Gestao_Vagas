@@ -3,6 +3,7 @@ package br.com.yangarrido.gestao_vagas.modules.candidate.userCases;
 import br.com.yangarrido.gestao_vagas.exceptions.JobNotFoundException;
 import br.com.yangarrido.gestao_vagas.exceptions.UserNotFoundException;
 import br.com.yangarrido.gestao_vagas.modules.candidate.CandidateRepository;
+import br.com.yangarrido.gestao_vagas.modules.candidate.entity.ApplyJobEntity;
 import br.com.yangarrido.gestao_vagas.modules.candidate.repository.ApplyJobRepository;
 import br.com.yangarrido.gestao_vagas.modules.company.repositories.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ApplyJobCandidateUserCase {
     @Autowired
     private ApplyJobRepository applyJobRepository;
 
-    public void execute(UUID candidateId, UUID jobId) {
+    public ApplyJobEntity execute(UUID candidateId, UUID jobId) {
 
         this.candidateRepository.findById(candidateId)
         .orElseThrow(() -> {
@@ -33,5 +34,12 @@ public class ApplyJobCandidateUserCase {
         .orElseThrow(() -> {
             throw new JobNotFoundException();
         });
+
+        var applyJob = ApplyJobEntity.builder()
+                .candidateId(candidateId)
+                .jobId(jobId)
+                .build();
+
+        return this.applyJobRepository.save(applyJob);
     }
 }

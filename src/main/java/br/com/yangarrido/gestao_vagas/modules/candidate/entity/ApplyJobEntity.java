@@ -4,6 +4,7 @@ import br.com.yangarrido.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.yangarrido.gestao_vagas.modules.company.entities.JobEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Entity(name = "apply_jobs")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplyJobEntity {
