@@ -3,6 +3,7 @@ package br.com.yangarrido.gestao_vagas.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,8 @@ public class SecurityConfig {
 
   private static final String[] PERMIT_ALL_LIST = {
           "/swagger-ui/**",
-          "/swagger-ui/index.html/v3/api-docs/**",
+          "/swagger-ui.html",
+          "/v3/api-docs",
           "/v3/api-docs/**",
           "/swagger-resources/**",
           "/actuator/**"
@@ -32,10 +34,10 @@ public class SecurityConfig {
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth ->{
-          auth.requestMatchers("/candidate/").permitAll()
-              .requestMatchers("/company/").permitAll()
-              .requestMatchers("/company/auth").permitAll()
-              .requestMatchers("/candidate/auth").permitAll()
+          auth.requestMatchers(HttpMethod.POST, "/candidate/", "/candidate").permitAll()
+              .requestMatchers(HttpMethod.POST, "/candidate/auth").permitAll()
+              .requestMatchers(HttpMethod.POST, "/company/", "/company").permitAll()
+              .requestMatchers(HttpMethod.POST, "/company/auth").permitAll()
               .requestMatchers(PERMIT_ALL_LIST).permitAll();
           auth.anyRequest().authenticated();
 

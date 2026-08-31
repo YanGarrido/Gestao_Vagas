@@ -24,14 +24,7 @@ public class SecurityFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
     String path = request.getRequestURI();
-    return path.startsWith("/swagger-ui") ||
-           path.startsWith("/v3/api-docs") ||
-           path.startsWith("/swagger-resources") ||
-           path.startsWith("/actuator") ||
-           path.equals("/candidate/") ||
-           path.equals("/candidate/auth") ||
-           path.equals("/company/") ||
-           path.equals("/company/auth");
+    return !path.startsWith("/company");
   }
 
   @Override
